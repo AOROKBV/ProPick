@@ -29,12 +29,12 @@
 <span
 	class="inline-flex items-center gap-1.5 rounded-full border font-mono transition-all duration-200 {sizeClasses} {selected
 		? `${info.bgClass} ${info.textClass} ${info.borderClass} shadow-xs`
-		: 'bg-[#774936]/5 text-[#774936]/40 border-[#774936]/15 opacity-60'}"
+		: 'bg-[#280003]/5 text-[#280003]/40 border-[#280003]/15 opacity-60'}"
 >
 	{#if selected}
 		<span class="inline-block {dotSizeClass} rounded-full bg-current animate-pulse"></span>
 	{:else}
-		<span class="inline-block {dotSizeClass} rounded-full bg-[#774936]/30"></span>
+		<span class="inline-block {dotSizeClass} rounded-full bg-[#280003]/30"></span>
 	{/if}
 	
 	<span>Level {level}</span>
