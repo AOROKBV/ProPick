@@ -1,11 +1,10 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-brand-pale: #F5D0C5;
+  --color-brand-pale: #FFF4E0;
   --color-brand-sand: #D69F7E;
   --color-brand-wood: #774936;
   --color-brand-dark: #050609;
-  --color-brand-card: #0d0f15;
   
   --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -13,11 +12,11 @@
 
 @layer utilities {
   .glass-card {
-    background: rgba(13, 15, 21, 0.75);
+    background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(245, 208, 197, 0.12);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(214, 159, 126, 0.3);
+    box-shadow: 0 8px 30px 0 rgba(119, 73, 54, 0.08);
   }
 
   .glass-card-interactive {
@@ -25,23 +24,15 @@
   }
 
   .glass-card-interactive:hover {
-    border-color: rgba(214, 159, 126, 0.35);
-    box-shadow: 0 12px 40px 0 rgba(214, 159, 126, 0.15);
+    border-color: rgba(119, 73, 54, 0.4);
+    box-shadow: 0 12px 32px 0 rgba(119, 73, 54, 0.14);
     transform: translateY(-2px);
   }
 
   .glass-pill {
-    background: rgba(245, 208, 197, 0.05);
+    background: rgba(214, 159, 126, 0.15);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(245, 208, 197, 0.15);
-  }
-
-  .text-glow {
-    text-shadow: 0 0 20px rgba(245, 208, 197, 0.4);
-  }
-
-  .text-glow-sand {
-    text-shadow: 0 0 20px rgba(214, 159, 126, 0.5);
+    border: 1px solid rgba(119, 73, 54, 0.2);
   }
 }
 
@@ -50,35 +41,19 @@
   0% {
     transform: translateY(-20px) scale(0.98);
     opacity: 0.3;
-    filter: blur(4px);
   }
   50% {
     transform: translateY(10px) scale(1.02);
     opacity: 0.8;
-    filter: blur(1px);
   }
   100% {
     transform: translateY(0) scale(1);
     opacity: 1;
-    filter: blur(0);
-  }
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(214, 159, 126, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 35px rgba(245, 208, 197, 0.4);
   }
 }
 
 .animate-slot-spin {
   animation: slotSpin 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.animate-pulse-glow {
-  animation: pulseGlow 2.5s infinite ease-in-out;
 }
 
 /* Custom Scrollbar */
@@ -88,14 +63,14 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #050609;
+  background: #FFF4E0;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #774936;
+  background: #D69F7E;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #D69F7E;
+  background: #774936;
 }

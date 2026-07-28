@@ -17,10 +17,6 @@ export function buildProgrammersApiUrl(
 	params.push(`perPage=${perPage}`);
 	params.push(`page=${page}`);
 
-	if (filters.order) {
-		params.push(`order=${encodeURIComponent(filters.order)}`);
-	}
-
 	if (filters.levels && filters.levels.length > 0) {
 		// Sort levels ascending for clean URL structure
 		const sortedLevels = [...filters.levels].sort((a, b) => a - b);

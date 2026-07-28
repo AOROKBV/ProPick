@@ -3,18 +3,18 @@ import type { RequestHandler } from './$types';
 import type { ChallengeApiResponse, FilterOptions, RandomChallengeResponse } from '$lib/types';
 import { buildProgrammersApiUrl } from '$lib/randomizer/query';
 import { selectRandomPage, selectRandomItem } from '$lib/randomizer/engine';
+import { ensureLanguages } from '$lib/randomizer/filters';
 
 export const GET: RequestHandler = async ({ url, fetch }) => {
 	try {
 		// Extract filters from incoming URL parameters
 		const levelsParam = url.searchParams.getAll('levels[]').map(Number).filter((n) => !isNaN(n));
-		const languagesParam = url.searchParams.getAll('languages[]').filter(Boolean);
-		const orderParam = (url.searchParams.get('order') as FilterOptions['order']) || undefined;
+		const rawLanguages = url.searchParams.getAll('languages[]').filter(Boolean);
+		const languagesParam = ensureLanguages(rawLanguages);
 
 		const filters: FilterOptions = {
 			levels: levelsParam,
-			languages: languagesParam,
-			order: orderParam
+			languages: languagesParam
 		};
 
 		// 1. Request Page 1 to inspect totalPages & totalEntries
