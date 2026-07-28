@@ -9,12 +9,10 @@ export const GET: RequestHandler = async ({ url, fetch }) => {
 		// Extract filters from incoming URL parameters
 		const levelsParam = url.searchParams.getAll('levels[]').map(Number).filter((n) => !isNaN(n));
 		const languagesParam = url.searchParams.getAll('languages[]').filter(Boolean);
-		const orderParam = (url.searchParams.get('order') as FilterOptions['order']) || undefined;
 
 		const filters: FilterOptions = {
 			levels: levelsParam,
-			languages: languagesParam,
-			order: orderParam
+			languages: languagesParam
 		};
 
 		// 1. Request Page 1 to inspect totalPages & totalEntries

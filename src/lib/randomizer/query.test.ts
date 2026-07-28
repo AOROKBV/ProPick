@@ -17,13 +17,6 @@ describe('buildProgrammersApiUrl', () => {
 		expect(url).toBe(`${PROGRAMMERS_BASE_URL}?perPage=20&page=1&languages[]=python3&languages[]=java`);
 	});
 
-	it('should include order parameter when order is specified', () => {
-		const url = buildProgrammersApiUrl({ levels: [2], languages: ['javascript'], order: 'acceptance_desc' });
-		expect(url).toBe(
-			`${PROGRAMMERS_BASE_URL}?perPage=20&page=1&order=acceptance_desc&levels[]=2&languages[]=javascript`
-		);
-	});
-
 	it('should support custom page and perPage', () => {
 		const url = buildProgrammersApiUrl({ levels: [1], languages: [] }, 5, 50);
 		expect(url).toBe(`${PROGRAMMERS_BASE_URL}?perPage=50&page=5&levels[]=1`);

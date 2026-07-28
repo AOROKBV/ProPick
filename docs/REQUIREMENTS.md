@@ -3,7 +3,7 @@
 ## 1. 프로젝트 개요 (Overview)
 
 * **프로젝트명**: ProPick (프로픽 - 프로그래머스 랜덤 문제 추천 서비스)
-* **목적**: 프로그래머스(Programmers) 코딩 테스트 문제 중 사용자 맞춤형 필터 조건(난이도, 언어, 정렬 기준 등)에 따라 무작위(Random)로 문제를 추첨 및 추천해 주는 웹 애플리케이션
+* **목적**: 프로그래머스(Programmers) 코딩 테스트 문제 중 사용자 맞춤형 필터 조건(난이도, 언어 등)에 따라 무작위(Random)로 문제를 추첨 및 추천해 주는 웹 애플리케이션
 * **핵심 가치**:
   * **우유부단함 해소**: 조건에 맞는 문제를 즉시 무작위 추첨하여 학습 효율 증대
   * **뛰어난 UI/UX**: 감각적이고 직관적인 디자인과 몰입감 있는 추첨 인터랙션 제공
@@ -144,7 +144,7 @@ sequenceDiagram
     participant Server as SvelteKit Server (Proxy)
     participant API as Programmers API
 
-    User->>UI: 필터 설정 (Level, Language, Order) 및 [랜덤 뽑기] 클릭
+    User->>UI: 필터 설정 (Level, Language) 및 [랜덤 뽑기] 클릭
     UI->>Server: /api/random-challenge?levels=... 요청
     Server->>API: GET /api/v2/school/challenges/?page=1 (총 페이지 수 조회)
     API-->>Server: totalPages, totalEntries 반환

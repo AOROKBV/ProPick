@@ -12,8 +12,7 @@
 	// Reactive state variables
 	let filters = $state<FilterOptions>({
 		levels: [],
-		languages: [],
-		order: undefined
+		languages: []
 	});
 
 	let currentChallenge = $state<Challenge | null>(null);
@@ -37,7 +36,7 @@
 	}
 
 	function handleResetFilters() {
-		filters = { levels: [], languages: [], order: undefined };
+		filters = { levels: [], languages: [] };
 	}
 
 	async function rollChallenge() {
@@ -55,9 +54,6 @@
 			}
 			if (filters.languages) {
 				filters.languages.forEach((lang) => params.append('languages[]', lang));
-			}
-			if (filters.order) {
-				params.append('order', filters.order);
 			}
 
 			const res = await fetch(`/api/random-challenge?${params.toString()}`);

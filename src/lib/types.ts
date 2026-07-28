@@ -22,7 +22,6 @@ export interface ChallengeApiResponse {
 export interface FilterOptions {
 	levels: number[];
 	languages: string[];
-	order?: 'recent' | 'acceptance_desc' | 'acceptance_asc';
 }
 
 export interface RandomChallengeResponse {

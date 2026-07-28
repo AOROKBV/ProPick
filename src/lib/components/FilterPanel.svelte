@@ -50,14 +50,8 @@
 		onFilterChange({ ...filters, languages: updated });
 	}
 
-	function setOrder(e: Event) {
-		if (disabled) return;
-		const val = (e.target as HTMLSelectElement).value as FilterOptions['order'];
-		onFilterChange({ ...filters, order: val || undefined });
-	}
-
 	const activeFilterCount = $derived(
-		(filters.levels?.length || 0) + (filters.languages?.length || 0) + (filters.order ? 1 : 0)
+		(filters.levels?.length || 0) + (filters.languages?.length || 0)
 	);
 </script>
 
@@ -142,25 +136,6 @@
 					</button>
 				{/each}
 			</div>
-		</div>
-
-		<!-- Order / Sort Section -->
-		<div>
-			<label for="order-select" class="block text-xs font-semibold text-[#774936] uppercase tracking-wider mb-2">
-				정렬 기준 (Order)
-			</label>
-			<select
-				id="order-select"
-				value={filters.order || ''}
-				onchange={setOrder}
-				{disabled}
-				class="w-full sm:w-64 px-3.5 py-2 rounded-xl text-xs font-medium bg-[#FAF0EC] text-[#774936] border border-[#774936]/20 focus:border-[#774936] focus:outline-none cursor-pointer"
-			>
-				<option value="">전체 무작위 (기본)</option>
-				<option value="recent">최신 등록순</option>
-				<option value="acceptance_desc">정답률 높은 순</option>
-				<option value="acceptance_asc">정답률 낮은 순</option>
-			</select>
 		</div>
 	</div>
 </div>
