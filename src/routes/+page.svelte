@@ -10,6 +10,8 @@
 	import EmptyState from '$lib/components/EmptyState.svelte';
 	import HistoryDrawer from '$lib/components/HistoryDrawer.svelte';
 
+	import { fetchRandomChallenge } from '$lib/randomizer/service';
+
 	// Reactive state variables
 	let filters = $state<FilterOptions>({
 		levels: [],
@@ -48,16 +50,11 @@
 		errorReason = null;
 
 		try {
-			// Construct query string for SvelteKit proxy server
-			const params = new URLSearchParams();
-			if (filters.levels) {
-				filters.levels.forEach((l) => params.append('levels[]', String(l)));
-			}
 			const languages = ensureLanguages(filters.languages);
-			languages.forEach((lang) => params.append('languages[]', lang));
-
-			const res = await fetch(`/api/random-challenge?${params.toString()}`);
-			const data: RandomChallengeResponse = await res.json();
+			const data = await fetchRandomChallenge({
+				levels: filters.levels,
+				languages
+			});
 
 			// Simulated roulette animation delay for satisfying UX
 			await new Promise((resolve) => setTimeout(resolve, 600));
