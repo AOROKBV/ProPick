@@ -1,7 +1,14 @@
 <script lang="ts">
 	import type { FilterOptions } from '$lib/types';
 	import LevelBadge from './LevelBadge.svelte';
-	import { toggleLanguageFilter } from '$lib/randomizer/filters';
+	import {
+		toggleLanguageFilter,
+		toggleLevelFilter,
+		selectLevelPreset,
+		getLevelSummary,
+		getLevelInfo,
+		type LevelPreset
+	} from '$lib/randomizer/filters';
 
 	let {
 		filters,
@@ -27,16 +34,23 @@
 		{ id: 'go', label: 'Go' }
 	];
 
+	const presets: { id: LevelPreset; label: string }[] = [
+		{ id: 'all', label: '전체 (Lv.0~5)' },
+		{ id: 'beginner', label: '입문·기초 (Lv.0~1)' },
+		{ id: 'intermediate', label: '중급·상급 (Lv.2~3)' },
+		{ id: 'advanced', label: '고난도 (Lv.4~5)' }
+	];
+
 	function toggleLevel(lvl: number) {
 		if (disabled) return;
-		const current = filters.levels || [];
-		let updated: number[];
-		if (current.includes(lvl)) {
-			updated = current.filter((l) => l !== lvl);
-		} else {
-			updated = [...current, lvl];
-		}
+		const updated = toggleLevelFilter(filters.levels || [], lvl);
 		onFilterChange({ ...filters, levels: updated });
+	}
+
+	function handleApplyPreset(preset: LevelPreset) {
+		if (disabled) return;
+		const updatedLevels = selectLevelPreset(preset);
+		onFilterChange({ ...filters, levels: updatedLevels });
 	}
 
 	function toggleLanguage(langId: string) {
@@ -49,9 +63,17 @@
 	const activeFilterCount = $derived(
 		(filters.levels?.length || 0) + (filters.languages?.length || 0)
 	);
+
+	const levelSummary = $derived(getLevelSummary(filters.levels || []));
+	
+	// Helper to check if level is selected (empty array means all levels selected)
+	const isLevelSelected = (lvl: number) => {
+		if (!filters.levels || filters.levels.length === 0) return true;
+		return filters.levels.includes(lvl);
+	};
 </script>
 
-<div class="glass-card rounded-2xl p-5 sm:p-6 mb-8 border border-[#774936]/15">
+<div class="glass-card rounded-2xl p-5 sm:p-6 mb-8 border border-[#774936]/15 shadow-sm">
 	<!-- Panel Header -->
 	<div class="flex items-center justify-between pb-4 mb-5 border-b border-[#774936]/15">
 		<div class="flex items-center gap-2.5">
@@ -88,27 +110,94 @@
 	</div>
 
 	<!-- Levels Section -->
-	<div class="space-y-4">
+	<div class="space-y-5">
 		<div>
-			<span class="block text-xs font-semibold text-[#774936] uppercase tracking-wider mb-2">
-				난이도 (Levels)
-			</span>
-			<div class="flex flex-wrap gap-2">
+			<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+				<span class="text-xs font-semibold text-[#774936] uppercase tracking-wider flex items-center gap-1.5">
+					<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+					</svg>
+					난이도 선택 (Levels)
+				</span>
+
+				<!-- Quick Presets -->
+				<div class="flex flex-wrap gap-1.5">
+					<span class="text-[11px] text-[#774936]/60 self-center mr-1 hidden sm:inline">빠른 선택:</span>
+					{#each presets as preset}
+						<button
+							type="button"
+							onclick={() => handleApplyPreset(preset.id)}
+							{disabled}
+							class="px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all duration-150 border cursor-pointer bg-[#774936]/5 text-[#774936] border-[#774936]/15 hover:bg-[#774936]/15 active:scale-95 disabled:opacity-50"
+						>
+							{preset.label}
+						</button>
+					{/each}
+				</div>
+			</div>
+
+			<!-- Level Cards Grid -->
+			<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 mb-4">
 				{#each ALL_LEVELS as level}
-					{@const selected = filters.levels?.includes(level)}
+					{@const selected = isLevelSelected(level)}
+					{@const info = getLevelInfo(level)}
 					<button
 						type="button"
 						onclick={() => toggleLevel(level)}
 						{disabled}
-						class="transition-all duration-200 cursor-pointer rounded-full p-0.5 border text-xs font-medium ${
-							selected
-								? 'ring-2 ring-[#774936] ring-offset-2 ring-offset-[#FFF4E0] scale-105'
-								: 'opacity-60 hover:opacity-100 hover:scale-102 border-transparent'
-						}"
+						class="relative flex flex-col p-3 rounded-xl border text-left transition-all duration-200 cursor-pointer transform hover:-translate-y-0.5 disabled:opacity-50 {selected
+								? `bg-[#FFF4E0] ${info.borderClass} ring-2 ${info.activeRing} shadow-sm scale-102`
+								: 'bg-[#774936]/5 border-[#774936]/15 opacity-60 hover:opacity-100 hover:border-[#774936]/30'}"
 					>
-						<LevelBadge {level} size="md" />
+						<!-- Top row inside card: Checkmark & LevelBadge -->
+						<div class="flex items-center justify-between gap-1 mb-2">
+							<LevelBadge {level} size="sm" {selected} />
+							{#if selected}
+								<span class="w-4 h-4 rounded-full bg-[#050609] text-[#FFF4E0] flex items-center justify-center text-[10px] font-bold">
+									✓
+								</span>
+							{/if}
+						</div>
+
+						<!-- Level Title & Tag -->
+						<div class="text-xs font-bold text-[#774936] mb-0.5">
+							{info.name}
+						</div>
+						<div class="text-[10px] text-[#774936]/70 font-medium">
+							{info.tag}
+						</div>
 					</button>
 				{/each}
+			</div>
+
+			<!-- Selected Difficulty Summary Card -->
+			<div class="p-3.5 sm:p-4 rounded-xl bg-[#FAF0EC] border border-[#774936]/20 transition-all">
+				<div class="flex items-center justify-between gap-2 mb-1.5">
+					<div class="flex items-center gap-2">
+						<span class="inline-block w-2 h-2 rounded-full bg-[#774936]"></span>
+						<h3 class="text-xs font-bold text-[#774936]">
+							{levelSummary.title}
+						</h3>
+					</div>
+
+					<!-- Visual Level Range Gauge Bar -->
+					<div class="flex items-center gap-1 bg-[#FFF4E0] px-2 py-1 rounded-md border border-[#774936]/10">
+						{#each ALL_LEVELS as lvl}
+							{@const active = isLevelSelected(lvl)}
+							{@const info = getLevelInfo(lvl)}
+							<span
+								class="w-2 h-2 rounded-full transition-all duration-300 {active
+									? `${info.bgClass.replace('/15', '')} scale-110 ring-1 ring-current`
+									: 'bg-[#774936]/20'}"
+								title={`Lv.${lvl} ${info.name}: ${active ? '포함됨' : '제외됨'}`}
+							></span>
+						{/each}
+					</div>
+				</div>
+
+				<p class="text-xs text-[#774936]/80 leading-relaxed">
+					{levelSummary.description}
+				</p>
 			</div>
 		</div>
 
@@ -125,7 +214,7 @@
 						onclick={() => toggleLanguage(lang.id)}
 						{disabled}
 						class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer border {selected
-							? 'bg-[#050609] text-[#FFF4E0] border-[#050609] scale-105'
+							? 'bg-[#050609] text-[#FFF4E0] border-[#050609] scale-105 shadow-xs'
 							: 'bg-[#774936]/10 text-[#774936] border-[#774936]/20 hover:bg-[#774936]/20'}"
 					>
 						{lang.label}

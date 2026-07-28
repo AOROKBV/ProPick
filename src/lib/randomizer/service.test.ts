@@ -5,8 +5,11 @@ import type { ChallengeApiResponse } from '$lib/types';
 describe('fetchRandomChallenge service', () => {
 	it('should return challenge successfully when API returns valid data', async () => {
 		const mockResponse: ChallengeApiResponse = {
+			page: 1,
+			perPage: 20,
 			totalEntries: 2,
 			totalPages: 1,
+			languages: ['javascript'],
 			result: [
 				{
 					id: 101,
@@ -15,7 +18,8 @@ describe('fetchRandomChallenge service', () => {
 					level: 0,
 					finishedCount: 50000,
 					acceptanceRate: 88,
-					solved: false
+					status: 'solved',
+					openedAt: '2023-01-01'
 				},
 				{
 					id: 102,
@@ -24,7 +28,8 @@ describe('fetchRandomChallenge service', () => {
 					level: 0,
 					finishedCount: 45000,
 					acceptanceRate: 90,
-					solved: false
+					status: 'solved',
+					openedAt: '2023-01-01'
 				}
 			]
 		};
@@ -45,8 +50,11 @@ describe('fetchRandomChallenge service', () => {
 
 	it('should handle NO_MATCHING_CHALLENGES when API returns empty result', async () => {
 		const mockResponse: ChallengeApiResponse = {
+			page: 1,
+			perPage: 20,
 			totalEntries: 0,
 			totalPages: 0,
+			languages: ['brainfuck'],
 			result: []
 		};
 
