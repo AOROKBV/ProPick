@@ -112,7 +112,7 @@
 					href={programmersUrl}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl text-sm font-bold text-[#F5D0C5] bg-[#050609] hover:bg-[#774936] transition-colors duration-200 shadow-md cursor-pointer group/link"
+					class="flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl text-sm font-bold text-[#FFF4E0] bg-[#050609] hover:bg-[#774936] transition-colors duration-200 shadow-md cursor-pointer group/link"
 				>
 					<span>프로그래머스에서 문제 풀기</span>
 					<svg class="w-4 h-4 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

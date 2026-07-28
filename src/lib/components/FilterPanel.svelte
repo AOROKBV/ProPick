@@ -64,7 +64,7 @@
 				<h2 class="text-base font-bold text-[#774936] flex items-center gap-2">
 					추첨 필터 설정
 					{#if activeFilterCount > 0}
-						<span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-[#050609] text-[#F5D0C5]">
+						<span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-[#050609] text-[#FFF4E0]">
 							{activeFilterCount}개 적용 중
 						</span>
 					{/if}
@@ -102,7 +102,7 @@
 						{disabled}
 						class="transition-all duration-200 cursor-pointer rounded-full p-0.5 border text-xs font-medium ${
 							selected
-								? 'ring-2 ring-[#774936] ring-offset-2 ring-offset-[#F5D0C5] scale-105'
+								? 'ring-2 ring-[#774936] ring-offset-2 ring-offset-[#FFF4E0] scale-105'
 								: 'opacity-60 hover:opacity-100 hover:scale-102 border-transparent'
 						}"
 					>
@@ -125,7 +125,7 @@
 						onclick={() => toggleLanguage(lang.id)}
 						{disabled}
 						class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer border {selected
-							? 'bg-[#050609] text-[#F5D0C5] border-[#050609] scale-105'
+							? 'bg-[#050609] text-[#FFF4E0] border-[#050609] scale-105'
 							: 'bg-[#774936]/10 text-[#774936] border-[#774936]/20 hover:bg-[#774936]/20'}"
 					>
 						{lang.label}

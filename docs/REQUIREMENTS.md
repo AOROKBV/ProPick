@@ -31,7 +31,7 @@
 `docs/DESIGN.md` 및 modern web aesthetics 기준 준수
 
 ### 3.1 Color Palette
-* **Dominant Color (주 색상)**: `#F5D0C5` (Soft Pale Pink / Cream)
+* **Dominant Color (주 색상)**: `#FFF4E0` (Cream Butter)
 * **Secondary Colors (보조 색상)**: 
   * `#D69F7E` (Warm Sand Brown)
   * `#774936` (Deep Wood Brown)

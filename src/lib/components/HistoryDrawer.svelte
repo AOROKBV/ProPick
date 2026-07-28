@@ -70,11 +70,11 @@
 		</div>
 
 		<!-- Tab Switcher -->
-		<div class="flex gap-2 p-1 rounded-xl bg-[#F5D0C5] border border-[#774936]/15 mb-4">
+		<div class="flex gap-2 p-1 rounded-xl bg-[#FFF4E0] border border-[#774936]/15 mb-4">
 			<button
 				onclick={() => (activeTab = 'history')}
 				class="flex-1 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer {activeTab === 'history'
-					? 'bg-[#050609] text-[#F5D0C5] shadow-sm'
+					? 'bg-[#050609] text-[#FFF4E0] shadow-sm'
 					: 'text-[#774936]/70 hover:text-[#774936]'}"
 			>
 				히스토리 ({history.length})
@@ -82,7 +82,7 @@
 			<button
 				onclick={() => (activeTab = 'bookmarks')}
 				class="flex-1 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer {activeTab === 'bookmarks'
-					? 'bg-[#050609] text-[#F5D0C5] shadow-sm'
+					? 'bg-[#050609] text-[#FFF4E0] shadow-sm'
 					: 'text-[#774936]/70 hover:text-[#774936]'}"
 			>
 				★ 즐겨찾기 ({bookmarkedHistoryItems.length})

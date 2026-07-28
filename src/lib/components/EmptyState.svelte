@@ -26,7 +26,7 @@
 		{#if onReset}
 			<button
 				onclick={onReset}
-				class="px-5 py-2.5 rounded-xl text-xs font-bold text-[#F5D0C5] bg-[#050609] hover:bg-[#774936] transition-colors cursor-pointer"
+				class="px-5 py-2.5 rounded-xl text-xs font-bold text-[#FFF4E0] bg-[#050609] hover:bg-[#774936] transition-colors cursor-pointer"
 			>
 				필터 초기화하기
 			</button>

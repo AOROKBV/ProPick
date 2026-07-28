@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-brand-pale: #F5D0C5;
+  --color-brand-pale: #FFF4E0;
   --color-brand-sand: #D69F7E;
   --color-brand-wood: #774936;
   --color-brand-dark: #050609;
@@ -63,7 +63,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #F5D0C5;
+  background: #FFF4E0;
 }
 
 ::-webkit-scrollbar-thumb {
