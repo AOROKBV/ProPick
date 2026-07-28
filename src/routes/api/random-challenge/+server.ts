@@ -3,12 +3,14 @@ import type { RequestHandler } from './$types';
 import type { ChallengeApiResponse, FilterOptions, RandomChallengeResponse } from '$lib/types';
 import { buildProgrammersApiUrl } from '$lib/randomizer/query';
 import { selectRandomPage, selectRandomItem } from '$lib/randomizer/engine';
+import { ensureLanguages } from '$lib/randomizer/filters';
 
 export const GET: RequestHandler = async ({ url, fetch }) => {
 	try {
 		// Extract filters from incoming URL parameters
 		const levelsParam = url.searchParams.getAll('levels[]').map(Number).filter((n) => !isNaN(n));
-		const languagesParam = url.searchParams.getAll('languages[]').filter(Boolean);
+		const rawLanguages = url.searchParams.getAll('languages[]').filter(Boolean);
+		const languagesParam = ensureLanguages(rawLanguages);
 
 		const filters: FilterOptions = {
 			levels: levelsParam,

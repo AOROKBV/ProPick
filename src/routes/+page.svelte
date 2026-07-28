@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import type { Challenge, FilterOptions, HistoryItem, RandomChallengeResponse } from '$lib/types';
 	import { getHistory, addToHistory, clearHistory, getBookmarks, toggleBookmark } from '$lib/utils/storage';
+	import { DEFAULT_LANGUAGES, ensureLanguages } from '$lib/randomizer/filters';
 	import Header from '$lib/components/Header.svelte';
 	import FilterPanel from '$lib/components/FilterPanel.svelte';
 	import RandomizerCard from '$lib/components/RandomizerCard.svelte';
@@ -12,7 +13,7 @@
 	// Reactive state variables
 	let filters = $state<FilterOptions>({
 		levels: [],
-		languages: []
+		languages: [...DEFAULT_LANGUAGES]
 	});
 
 	let currentChallenge = $state<Challenge | null>(null);
@@ -36,7 +37,7 @@
 	}
 
 	function handleResetFilters() {
-		filters = { levels: [], languages: [] };
+		filters = { levels: [], languages: [...DEFAULT_LANGUAGES] };
 	}
 
 	async function rollChallenge() {
@@ -52,9 +53,8 @@
 			if (filters.levels) {
 				filters.levels.forEach((l) => params.append('levels[]', String(l)));
 			}
-			if (filters.languages) {
-				filters.languages.forEach((lang) => params.append('languages[]', lang));
-			}
+			const languages = ensureLanguages(filters.languages);
+			languages.forEach((lang) => params.append('languages[]', lang));
 
 			const res = await fetch(`/api/random-challenge?${params.toString()}`);
 			const data: RandomChallengeResponse = await res.json();

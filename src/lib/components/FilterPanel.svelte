@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { FilterOptions } from '$lib/types';
 	import LevelBadge from './LevelBadge.svelte';
+	import { toggleLanguageFilter } from '$lib/randomizer/filters';
 
 	let {
 		filters,
@@ -41,12 +42,7 @@
 	function toggleLanguage(langId: string) {
 		if (disabled) return;
 		const current = filters.languages || [];
-		let updated: string[];
-		if (current.includes(langId)) {
-			updated = current.filter((l) => l !== langId);
-		} else {
-			updated = [...current, langId];
-		}
+		const updated = toggleLanguageFilter(current, langId);
 		onFilterChange({ ...filters, languages: updated });
 	}
 
@@ -73,7 +69,7 @@
 						</span>
 					{/if}
 				</h2>
-				<p class="text-xs text-[#774936]/70">원하는 난이도와 사용 언어를 선택하세요 (선택 해제 시 전체 대상)</p>
+				<p class="text-xs text-[#774936]/70">원하는 난이도와 사용 언어를 선택하세요 (언어는 최소 1개 이상 선택)</p>
 			</div>
 		</div>
 
