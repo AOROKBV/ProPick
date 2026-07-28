@@ -30,9 +30,6 @@
 	onMount(() => {
 		history = getHistory();
 		bookmarks = getBookmarks();
-
-		// Auto roll initial challenge on load
-		rollChallenge();
 	});
 
 	function handleFilterChange(updated: FilterOptions) {
